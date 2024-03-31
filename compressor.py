@@ -80,5 +80,5 @@ def compress_all_pdfs():
     # Close the progress bar
     progress_bar.close()
 
-# Example usage
+# Usage
 compress_all_pdfs()
