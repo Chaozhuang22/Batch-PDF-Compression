@@ -34,14 +34,9 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Create test folder and copy script
+    - name: Copy script
       run: |
-        mkdir test
         cp compress.py test/
-
-    - name: Copy test PDF files
-      run: |
-        cp test_1.pdf test_2.pdf test_3.pdf test_4.pdf test/
 
     - name: Run compression script
       run: |
