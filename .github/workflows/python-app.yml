@@ -1,0 +1,60 @@
+name: Compress PDF Test
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python 3.10
+      uses: actions/setup-python@v3
+      with:
+        python-version: "3.10"
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install flake8 pytest
+        if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+    - name: Lint with flake8
+      run: |
+        # stop the build if there are Python syntax errors or undefined names
+        flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
+        # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
+        flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
+
+    - name: Create test folder and copy script
+      run: |
+        mkdir test
+        cp compress.py test/
+
+    - name: Copy test PDF files
+      run: |
+        cp test_1.pdf test_2.pdf test_3.pdf test_4.pdf test/
+
+    - name: Run compression script
+      run: |
+        cd test
+        python compress.py
+
+    - name: Test compressed PDF files
+      run: |
+        ls -l test/*_c.pdf
+        # Add any additional tests or assertions for the compressed PDF files
+
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-results
+        path: test/
