@@ -34,9 +34,18 @@ jobs:
         # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
         flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
 
-    - name: Copy script
+    - name: Create test folder and copy script
       run: |
+        mkdir test
         cp compress.py test/
+
+    - name: Generate test PDF files
+      run: |
+        cp test.pdf test/
+        cd test
+        for i in {1..10}; do
+          cp test.pdf "test_${i}.pdf"
+        done
 
     - name: Run compression script
       run: |
@@ -46,7 +55,10 @@ jobs:
     - name: Test compressed PDF files
       run: |
         ls -l test/*_c.pdf
-        # Add any additional tests or assertions for the compressed PDF files
+        if [ $(ls test/*_c.pdf | wc -l) -ne 11 ]; then
+          echo "Expected 11 compressed PDF files, but found $(ls test/*_c.pdf | wc -l)"
+          exit 1
+        fi
 
     - name: Upload test results
       uses: actions/upload-artifact@v3
