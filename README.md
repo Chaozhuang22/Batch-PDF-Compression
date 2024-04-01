@@ -1,4 +1,4 @@
-# Compressing Difficult pdfs via
+# Compressing Image-based PDFs
 
 This Python script is designed to compress PDF files containing mainly images by extracting images from each page, compressing the images individually, and then creating a new PDF file with the compressed images.
 
