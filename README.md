@@ -4,17 +4,21 @@ This Python script is designed to compress PDF files containing mainly images by
 
 ## Prerequisites
 
-Before running the script, ensure that you have the [ImageMagick](https://imagemagick.org/script/download.php) installed on your system and accessible from the command line.
+Before running the script, ensure that you have the `poppler` installed on your system and accessible from the command line.
 
-You can install ImageMagick in Mac through:
+For Linux systems, you can install poppler using the package manager. For example, on Ubuntu or Debian:
 
 ```
-brew install imagemagick
+sudo apt-get install poppler-utils
 ```
-and
+
+For macOS, you can install poppler using Homebrew:
+
 ```
-brew install ghostscript
+brew install poppler
 ```
+
+For Windows, you can download the poppler binaries from the official website and add the bin directory to your system's PATH.
 
 ## Usage
 
